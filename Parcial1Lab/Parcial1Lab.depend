@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1602307404 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\main.c
+	<stdio.h>
+	<stdlib.h>
+	"Funciones.h"
+
+1602304551 c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\funciones.h
+
+1602289402 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\utn.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"utn.h"
+
+1602289402 c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\utn.h
+
+1602308410 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn.h"
+	"Funciones.h"
+
