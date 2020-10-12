@@ -22,7 +22,7 @@
 	"utn.h"
 	"Funciones.h"
 
-1602474245 source:c:\users\agusg\desktop\karen\parciales_lab_1\parcial1lab\funciones.c
+1602536315 source:c:\users\agusg\desktop\karen\parciales_lab_1\parcial1lab\funciones.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -31,9 +31,9 @@
 
 1602460370 c:\users\agusg\desktop\karen\parciales_lab_1\parcial1lab\utn.h
 
-1602473918 c:\users\agusg\desktop\karen\parciales_lab_1\parcial1lab\funciones.h
+1602536343 c:\users\agusg\desktop\karen\parciales_lab_1\parcial1lab\funciones.h
 
-1602474224 source:c:\users\agusg\desktop\karen\parciales_lab_1\parcial1lab\main.c
+1602536343 source:c:\users\agusg\desktop\karen\parciales_lab_1\parcial1lab\main.c
 	<stdio.h>
 	<stdlib.h>
 	"Funciones.h"

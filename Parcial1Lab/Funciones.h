@@ -19,11 +19,12 @@ typedef struct
     char descripcion[51];
     char tamanio[51];
     char pais[51];
+    int isEmpty;
     int idRaza;
 }eRaza;
 
 int menu(int flagOrdenado);
-int inicializarMascotas(eMascota list[], int len);
+int inicializarMascotas(eMascota listMascota[],eRaza listRaza[], int len);
 char confirmar();
 int buscarLibre(eMascota list[],int len);
 void hardCodearMascotas(eMascota listado[]);

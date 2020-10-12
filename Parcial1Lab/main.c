@@ -3,7 +3,7 @@
 #include "Funciones.h"
 
 #define TAMMASC 10
-#define TAMRAZA 4
+#define TAMRAZA 20
 int main()
 {
     char respuesta = 'n';
@@ -13,7 +13,7 @@ int main()
     eMascota listaMascotas[TAMMASC];
     eRaza listaRazas[TAMRAZA];
 
-    if(inicializarMascotas(listaMascotas,TAMMASC) != -1)
+    if(inicializarMascotas(listaMascotas,listaRazas,TAMRAZA) != -1)
     {
         hardCodearMascotas(listaMascotas);
         hardCodearRazas(listaRazas);
