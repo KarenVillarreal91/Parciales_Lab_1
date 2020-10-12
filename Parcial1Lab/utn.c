@@ -15,6 +15,7 @@ int utn_getCaracter(char* pResultado, char* mensaje, char* mensajeError, char mi
         do
         {
             printf("%s", mensaje);
+            fflush(stdin);
             scanf("%c", &buffer);
             if(buffer >= minimo && buffer <= maximo)
             {

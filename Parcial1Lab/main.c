@@ -6,8 +6,9 @@
 #define TAMRAZA 4
 int main()
 {
-    int respuesta;
+    char respuesta = 'n';
     int crearId = 5;
+    int flagOrdenado = 0;
 
     eMascota listaMascotas[TAMMASC];
     eRaza listaRazas[TAMRAZA];
@@ -19,7 +20,7 @@ int main()
 
         do
         {
-            switch(menu())      //Menu que devuelve la opcion elegida
+            switch(menu(flagOrdenado))      //Menu que devuelve la opcion elegida
             {
                 case 1:
                     crearId++;      //Se suma 1 cada vez que ingrese a la opcion 1
@@ -35,16 +36,35 @@ int main()
                 break;
 
                 case 3:
-                    mostrarMascotas(listaMascotas,listaRazas,TAMRAZA,TAMMASC);
-                    mostrarRaza(listaRazas,listaMascotas,TAMMASC,TAMRAZA); //Prueba de mostrar
+                    if(ordenarPorPais(listaMascotas,listaRazas,TAMMASC,TAMRAZA) == 0)
+                    {
+                        flagOrdenado++;
+
+                        if(flagOrdenado % 2 == 0)
+                        {
+                            printf("\n     Se desordeno la lista.");
+                        }
+                        else
+                        {
+                            printf("\n     Se ordeno la lista.");
+                        }
+                    }
                 break;
 
                 case 4:
+                    mostrarMascotas(listaMascotas,listaRazas,TAMRAZA,TAMMASC);
+                break;
+
+                case 5:
+                    mostrarRazaConMascotas(listaRazas,listaMascotas,TAMMASC,TAMRAZA);
+                break;
+
+                case 6:
                     respuesta = confirmar();
                 break;
 
             }
-
+            printf("\n\n");
             system("pause");
             system("cls");
         }while(respuesta != 's');       //Mientras el usario no responda "s" continua el programa
