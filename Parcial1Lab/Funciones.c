@@ -10,38 +10,45 @@ int menu(int flagOrdenado)
 {
     int op;
         printf("------------- Menu principal -------------\n");
-        printf("1- Cargar una mascota.\n");
-        printf("2- Borrar una mascota.\n");
+        printf(" 1- Cargar una mascota.\n");
+        printf(" 2- Cargar una raza.\n");
+        printf(" 3- Borrar una mascota.\n");
+        printf(" 4- Modificar una mascota.\n");
         if(flagOrdenado % 2 == 0)
         {
-            printf("3- Ordenar por pais de origen.\n");
-            printf("4- Listado completo.\n");
+            printf(" 5- Ordenar por pais de origen.\n");
+            printf(" 6- Listado completo.\n");
         }
         else
         {
-            printf("3- Desornar lista.\n");
-            printf("4- Listado completo. (Ordenado)\n");
+            printf(" 5- Desornar lista.\n");
+            printf(" 6- Listado completo. (Ordenado)\n");
         }
-        printf("5- Listado de razas con sus mascotas.\n");
-        printf("6- Salir.\n");
+        printf(" 7- Listado de razas con sus mascotas.\n");
+        printf(" 8- Mostrar el Pais de origen con mayor\n    cantidad de mascotas en la veterinaria.\n");
+        printf(" 9- Salir.\n");
         printf("------------------------------------------\n");
-        utn_getEntero(&op,1,"Ingrese la opcion: ","\nError! Opcion invalida.\n\n",1,6);
+        utn_getEntero(&op,1,"\nIngrese la opcion: ","\nError! Opcion invalida.\n\n",1,9);
         system("cls");
 
     return op;
 }
 
-int inicializarMascotas(eMascota listMascota[],eRaza listRaza[], int len)
+int setearEnVacio(eMascota listMascota[],eRaza listRaza[], int lenMascota, int lenRaza)
 {
     int i;
+    int j;
     int retorno = -1;
 
-    for(i = 0; i < len; i++)        //Recorre el cupo de razas seteado en VACIO
+    for(i = 0; i < lenMascota; i++)        //Recorre el cupo de razas seteado en VACIO
     {
         listMascota[i].isEmpty = VACIO;
-        listRaza[i].isEmpty = VACIO;
 
-        retorno = 0;
+        for(j = 0; j < lenRaza; j++)
+        {
+            listRaza[j].isEmpty = VACIO;
+            retorno = 0;
+        }
     }
 
     return retorno;
@@ -56,7 +63,24 @@ char confirmar()
     return resp;
 }
 
-int buscarLibre(eMascota list[],int len)
+int buscarLibreMascota(eMascota list[],int len)
+{
+    int i;
+    int retorno = -1;
+
+    for(i = 0; i < len; i++)        //Recorre el cupo y asigna el indice
+    {
+        if(list[i].isEmpty == VACIO)       //Verifica que el espacio este vacio
+        {
+            retorno = i;
+            break;
+        }
+    }
+
+    return retorno;
+}
+
+int buscarLibreRaza(eRaza list[],int len)
 {
     int i;
     int retorno = -1;
@@ -158,13 +182,16 @@ int ordenarPorPais(eMascota listMascota[],eRaza listRaza[], int lenMascota, int 
         {
             auxRaza[j] = sacarRazaPorId(listRaza,listMascota[j].idRaza,lenRaza);
 
-            if(strcmp(auxRaza[i].pais,auxRaza[j].pais) > 0)     //Compara por pais
+            if(auxRaza[i].isEmpty == OCUPADO && auxRaza[j].isEmpty == OCUPADO)
             {
-                auxMascota = listMascota[i];
-                listMascota[i] = listMascota[j];
-                listMascota[j] = auxMascota;
+                if(strcmp(auxRaza[i].pais,auxRaza[j].pais) > 0)     //Compara por pais
+                {
+                    auxMascota = listMascota[i];
+                    listMascota[i] = listMascota[j];
+                    listMascota[j] = auxMascota;
 
-                retorno = 0;
+                    retorno = 0;
+                }
             }
         }
     }
@@ -179,7 +206,7 @@ void mostrarMascotas(eMascota listMascota[], eRaza listRaza[], int lenRaza, int 
     eRaza raza;
 
     printf("\n%92s\n","--------------------------------- Listado de mascotas ---------------------------------");
-    printf("%9s %10s %9s %9s %10s %15s %11s\n","ID","Nombre","Edad","Sexo","Tipo","Descripcion","Pais");
+    printf("%9s %11s %8s %7s %8s %16s %11s %8s\n","ID","Nombre","Edad","Sexo","Tipo","Descripcion","Tamanio","Pais");
     printf("%92s\n","---------------------------------------------------------------------------------------");
 
     for(i = 0; i < lenMasc; i++)
@@ -196,6 +223,7 @@ void mostrarRazaConMascotas(eRaza listRaza[],eMascota listMascota[],int lenMasc,
 {
     int iMascota;
     int iRaza;
+    int flagAlmenosUno = 0;
 
     printf("\n%42s","| Listado de razas |");
 
@@ -212,9 +240,18 @@ void mostrarRazaConMascotas(eRaza listRaza[],eMascota listMascota[],int lenMasc,
                 if(listMascota[iMascota].idRaza == listRaza[iRaza].idRaza && listMascota[iMascota].isEmpty == 1)
                 {
                     mostrarUnaMascota(listMascota[iMascota]);
+
+                    flagAlmenosUno = 1;
                 }
             }
+
+            if(flagAlmenosUno == 0)
+            {
+                printf("%47s\n","No hay mascotas con esta raza.");
+            }
         }
+
+        flagAlmenosUno = 0;
     }
 }
 
@@ -228,14 +265,17 @@ void mostrarRazas(eRaza listRaza[],int lenRaza)
 
     for(i = 0; i < lenRaza; i++)
     {
-       mostrarUnaRaza(listRaza[i]);
+        if(listRaza[i].isEmpty == OCUPADO)
+        {
+            mostrarUnaRaza(listRaza[i]);
+        }
     }
 }
 
 void mostrarUnaMascotaConRaza(eMascota listMascota, eRaza listRaza)
 {
-    printf("%9d      %-11s %-10d %-8c %-10s %-14s %-12s\n",listMascota.idMascota,listMascota.nombre,listMascota.edad,listMascota.sexo,
-            listMascota.tipo,listRaza.descripcion,listRaza.pais);
+    printf("%9d      %-11s %-7d %-7c %-9s %-15s %-10s %-12s\n",listMascota.idMascota,listMascota.nombre,listMascota.edad,listMascota.sexo,
+            listMascota.tipo,listRaza.descripcion,listRaza.tamanio,listRaza.pais);
 }
 
 void mostrarUnaMascota(eMascota listMascota)
@@ -252,7 +292,7 @@ int agregarMascota(eMascota lista[], int len, char nombre[],int edad,char sexo,c
 {
     int retorno = -1;
     char resp;
-    int indice = buscarLibre(lista,len);
+    int indice = buscarLibreMascota(lista,len);
 
     if(indice != -1)
     {
@@ -279,7 +319,7 @@ int agregarMascota(eMascota lista[], int len, char nombre[],int edad,char sexo,c
     return retorno;
 }
 
-int crearUnaMascota(eMascota list[],eRaza listRaza[],int id,int lenMasc,int lenRaza)
+int crearUnaMascota(eMascota list[],eRaza listRaza[],int id,int lenMasc,int lenRaza,int idRazaMaximo)
 {
     char nombre[51];
     int edad;
@@ -297,11 +337,11 @@ int crearUnaMascota(eMascota list[],eRaza listRaza[],int id,int lenMasc,int lenR
             {
                 if(sexo == 'f' || sexo == 'm')
                 {
-                    if(pedirTipo(tipo,51,3,"Ingrese el tipo (Perro, Gato o Raro): ","\nError! Tipo invalido.\n") == 0)
+                    if(pedirTipo(tipo,51,3,"Ingrese el tipo (Perro, Gato o Raro): ","\nError! Tipo invalido.\n","Perro","Gato","Raro") == 0)
                     {
                         mostrarRazas(listRaza,lenRaza);
 
-                        if(utn_getEntero(&idRaza,3,"\n\nIngrese el ID de la raza: ","\nError! Raza invalida.\n",101,104) == 0)
+                        if(utn_getEntero(&idRaza,3,"\n\nIngrese el ID de la raza: ","\nError! Raza invalida.\n",101,idRazaMaximo) == 0)
                         {
                             retorno = agregarMascota(list,lenMasc,nombre,edad,sexo,tipo,id,idRaza);      //Asigna los valores ingresados al empleado nuevo
 
@@ -327,14 +367,75 @@ int crearUnaMascota(eMascota list[],eRaza listRaza[],int id,int lenMasc,int lenR
     return retorno;
 }
 
-void modificarMascota(eMascota listMascota[],eRaza listRaza[], int len)
+int agregarRaza(eRaza listRaza[],int lenRaza,char descripcion[], char tamanio[],char pais[],int idRaza)
 {
-    int indice = buscarMascota(listMascota,len);         //Busca el indice mediante la ID ingresada por el usuario
+    int retorno = -1;
+    char resp;
+    int indice = buscarLibreRaza(listRaza,lenRaza);
+
+    if(indice != -1)
+    {
+        resp = confirmar();         //Confirma que el usario esta seguro de agregar a la raza
+
+        if(resp == 's')         //Si reponde "s" continua y asigna los valores ingresados
+        {
+            strcpy(listRaza[indice].descripcion,descripcion);
+            strcpy(listRaza[indice].tamanio,tamanio);
+            strcpy(listRaza[indice].pais,pais);
+            listRaza[indice].idRaza = idRaza;
+            listRaza[indice].isEmpty = OCUPADO;
+
+            retorno = 0;
+        }
+    }
+    else
+    {
+        printf("\nYa no hay espacio libre para agregar una nueva raza.\n\n");
+    }
+
+    return retorno;
+}
+
+int crearRaza(eRaza listRaza[],int idRaza,int lenRaza)
+{
+    char descripcion[51];
+    char tamanio[51];
+    char pais[51];
+
+    int retorno = -1;
+
+    if(utn_getCadena(descripcion,51,0,"Ingrese el nombre de la Raza: ","\n\nError! Nombre invalido\n") == 0)
+    {
+        if(pedirTipo(tamanio,51,0,"Ingrese el tamanio (Chico, Mediano, Grande): ","\n\nError! Tamanio invalido\n","Chico","Mediano","Grande") == 0)
+        {
+            if(utn_getCadena(pais,51,0,"Ingrese el pais de origen: ","\n\nError! Pais invalido\n") == 0)
+            {
+                retorno = agregarRaza(listRaza,lenRaza,descripcion,tamanio,pais,idRaza);
+
+                if(retorno == 0)        //Si se asigno correctamente informa y finaliza
+                {
+                    printf("\nRaza agregada correctamente.\n\n");
+                }
+                else
+                {
+                    printf("\nNo se registrara a la raza.\n\n");
+                }
+            }
+        }
+    }
+
+    return retorno;
+}
+
+void modificarMascota(eMascota listMascota[],eRaza listRaza[], int lenMascota, int lenRaza,int idMaximo)
+{
+    int indice = buscarMascota(listMascota,lenMascota);         //Busca el indice mediante la ID ingresada por el usuario
     int opcion;
     char respuesta;
     char respuestaSalir;
 
     eMascota mascotaModificada;
+    eRaza raza;
 
     if(indice != -1)        //Si lo encontro correctamente continua
     {
@@ -343,25 +444,26 @@ void modificarMascota(eMascota listMascota[],eRaza listRaza[], int len)
             system("pause");
             system("cls");
 
-            printf("\n\n%57s\n","------------- Datos de la Mascota -------------");
-            printf("%14s %10s %9s %9s %9s\n","ID","Nombre","Edad","Sexo","Tipo");
-            printf("%57s\n","-----------------------------------------------");
+            printf("\n%92s\n","--------------------------------- Datos de la mascota ---------------------------------");
+            printf("%9s %11s %8s %7s %8s %16s %11s %8s\n","ID","Nombre","Edad","Sexo","Tipo","Descripcion","Tamanio","Pais");
+            printf("%92s\n","---------------------------------------------------------------------------------------");
 
-            mostrarUnaMascota(listMascota[indice]);
+            raza = sacarRazaPorId(listRaza,listMascota[indice].idRaza,lenRaza);
+            mostrarUnaMascotaConRaza(listMascota[indice],raza);
 
             //Pregunta al usuario que desea modificar mediante opciones y verifica
-            if(utn_getEntero(&opcion,0,"\nQue desea modificar?\n 1. Nombre.\n 2. Apellido.\n 3. Salario.\n 4. Sector.\n 5. Salir.\n\nSu opcion: ","\n\nError! Opcion invalida.\n\n",1,5) == 0)
+            if(utn_getEntero(&opcion,0,"\nQue desea modificar?\n 1. Nombre.\n 2. Edad.\n 3. Sexo.\n 4. Tipo.\n 5. Raza.\n 6. Salir.\n\nSu opcion: ","\n\nError! Opcion invalida.\n\n",1,6) == 0)
             {
                 switch(opcion)
                 {
                     case 1:  //1. Modifica el nombre
-                        if(utn_getCadena(empleadoModificado.name,51,0,"\nIngrese el nombre nuevo: ","\n\nError! Nombre invalido.\n\n") == 0)
+                        if(utn_getCadena(mascotaModificada.nombre,51,0,"\nIngrese el nombre nuevo: ","\n\nError! Nombre invalido.\n\n") == 0)
                         {
                             respuesta = confirmar();        //Confirma que esta seguro de modificar
 
                             if(respuesta == 's')        //Si responde "s" continua y asigna el nuevo nombre
                             {
-                                strcpy(list[indice].name,empleadoModificado.name);
+                                strcpy(listMascota[indice].nombre,mascotaModificada.nombre);
 
                                 printf("\n\nSe guardaron los cambios.\n\n");
                             }
@@ -372,14 +474,14 @@ void modificarMascota(eMascota listMascota[],eRaza listRaza[], int len)
                         }
                     break;
 
-                    case 2:  //2. Modifica el apellido
-                        if(utn_getCadena(empleadoModificado.lastName,51,0,"\nIngrese el apellido nuevo: ","\n\nError! Apellido invalido.\n\n") == 0)
+                    case 2:  //2. Modifica la edad
+                        if(utn_getEntero(&mascotaModificada.edad,0,"\nIngrese la edad nueva: ","\n\nError! Edad invalida.\n\n",0,25) == 0)
                         {
                             respuesta = confirmar();        //Confirma que esta seguro de modificar
 
-                            if(respuesta == 's')        //Si responde "s" continua y asigna el nuevo apellido
+                            if(respuesta == 's')        //Si responde "s" continua y asigna la nueva edad
                             {
-                                strcpy(list[indice].lastName,empleadoModificado.lastName);
+                                listMascota[indice].edad = mascotaModificada.edad;
 
                                 printf("\n\nSe guardaron los cambios.\n\n");
                             }
@@ -390,14 +492,40 @@ void modificarMascota(eMascota listMascota[],eRaza listRaza[], int len)
                         }
                     break;
 
-                    case 3:  //3. Modifica el salario
-                        if(utn_getFlotante(&empleadoModificado.salary,0,"\nIngrese el salario nuevo: ","\n\nError! Salario invalido.\n\n",0,999999) == 0)
+                    case 3:  //3. Modifica el sexo
+                        if(utn_getCaracter(&mascotaModificada.sexo,"\nIngrese el sexo nuevo (f o m): ","\n\nError! Sexo invalido.\n\n",'f','m',0) == 0)
+                        {
+                            if(mascotaModificada.sexo == 'f' || mascotaModificada.sexo == 'm')
+                            {
+                                respuesta = confirmar();        //Confirma que esta seguro de modificar
+
+                                if(respuesta == 's')        //Si responde "s" continua y asigna el nuevo sexo
+                                {
+                                    listMascota[indice].sexo = mascotaModificada.sexo;
+
+                                    printf("\n\nSe guardaron los cambios.\n\n");
+                                }
+                                else
+                                {
+                                    printf("\n\nNo se guardaran los cambios.\n\n");
+                                }
+                            }
+                            else
+                            {
+                                printf("\n\nError! Sexo invalido.\n\n");
+                            }
+                        }
+
+                    break;
+
+                    case 4:  //4. Modifica el tipo
+                        if(pedirTipo(mascotaModificada.tipo,51,3,"Ingrese el tipo (Perro, Gato o Raro): ","\nError! Tipo invalido.\n","Perro","Gato","Raro") == 0)
                         {
                             respuesta = confirmar();        //Confirma que esta seguro de modificar
 
-                            if(respuesta == 's')        //Si responde "s" continua y asigna el nuevo salario
+                            if(respuesta == 's')        //Si responde "s" continua y asigna el nuevo tipo
                             {
-                                list[indice].salary = empleadoModificado.salary;
+                                strcpy(listMascota[indice].tipo,mascotaModificada.tipo);
 
                                 printf("\n\nSe guardaron los cambios.\n\n");
                             }
@@ -406,17 +534,18 @@ void modificarMascota(eMascota listMascota[],eRaza listRaza[], int len)
                                 printf("\n\nNo se guardaran los cambios.\n\n");
                             }
                         }
-
                     break;
 
-                    case 4:  //4. Modifica el sector
-                        if(utn_getEntero(&empleadoModificado.sector,0,"\nIngrese el sector nuevo: ","\n\nError! Sector invalido.\n\n",1,20) == 0)
+                    case 5:  //5. Modifica la Raza
+                        mostrarRazas(listRaza,lenRaza);
+
+                        if(utn_getEntero(&mascotaModificada.idRaza,0,"\n\nIngrese el ID de la raza: ","\nError! Raza invalida.\n",101,idMaximo) == 0)
                         {
                             respuesta = confirmar();        //Confirma que esta seguro de modificar
 
-                            if(respuesta == 's')        //Si responde "s" continua y asigna el nuevo sector
+                            if(respuesta == 's')        //Si responde "s" continua y asigna el nuevo tipo
                             {
-                                list[indice].sector = empleadoModificado.sector;
+                                listMascota[indice].idRaza = mascotaModificada.idRaza;
 
                                 printf("\n\nSe guardaron los cambios.\n\n");
                             }
@@ -427,7 +556,7 @@ void modificarMascota(eMascota listMascota[],eRaza listRaza[], int len)
                         }
                     break;
 
-                    case 5:  //5. Salida, confirma que desea salir
+                    case 6:  //5. Salida, confirma que desea salir
                         respuestaSalir = confirmar();
                     break;
                 }
@@ -439,6 +568,95 @@ void modificarMascota(eMascota listMascota[],eRaza listRaza[], int len)
     {
         printf("\nNo se encontro a un empleado con esa ID.\n\n");
     }
+}
+
+void inicializarPais(ePaisMasMascotas listPais[],int lenRaza)
+{
+    int i;
+
+    for(i = 0; i < lenRaza; i++)        //Recorre el cupo de razas seteado en VACIO
+    {
+        listPais[i].isEmpty = VACIO;
+    }
+}
+
+void paisDeOrigen(eRaza listRaza[],eMascota listMascota[],int lenRaza,int lenMascota)
+{
+    int contador;
+    int indiceMaximoActual = 0;
+    int flagMax = 0;
+    char arrayPais[20][51];
+    int arrayCantidad[20];
+    char maximoPais[51];
+    int maximoCantidad;
+
+    for(int i = 0; i < lenRaza; i++)
+    {
+        contador = 0;
+
+        for(int j = 0;j < lenMascota;j++)
+        {
+            if(listMascota[j].isEmpty == OCUPADO && listMascota[j].idRaza == listRaza[i].idRaza)
+            {
+                contador++;
+            }
+        }
+
+        if(listRaza[indiceMaximoActual].isEmpty == OCUPADO)
+        {
+            strcpy(arrayPais[indiceMaximoActual],listRaza[i].pais);
+            arrayCantidad[indiceMaximoActual] = contador;
+
+            indiceMaximoActual++;
+        }
+    }
+
+    for(int i = 0; i < indiceMaximoActual-1; i++)
+    {
+            for(int j = i+1; j < indiceMaximoActual; j++)
+            {
+                    if(strcmp(arrayPais[i],arrayPais[j]) == 0)
+                    {
+                        arrayCantidad[i] += arrayCantidad[j];
+                    }
+            }
+    }
+
+   for(int k = 0; k < indiceMaximoActual; k++)
+    {
+            if(!flagMax)
+            {
+                maximoCantidad = arrayCantidad[k];
+                flagMax = 1;
+            }
+            else
+            {
+                if(arrayCantidad[k] > maximoCantidad)
+                {
+                    maximoCantidad = arrayCantidad[k];
+                    strcpy(maximoPais,arrayPais[k]);
+                }
+            }
+
+    }
+
+    printf("\n              |Pais con mayor cantidad de animales|\n");
+    printf("\n%45s\n","--------- Datos ---------");
+    printf("%28s %13s","Pais","Cantidad");
+    printf("\n%45s","-------------------------");
+    printf("\n%30s %7d\n",maximoPais,maximoCantidad);
+
+    /*printf("\n\n\n%57s\n","------------ Mascotas con ese pais ------------");
+    printf("%13s %11s %9s %9s %9s\n","ID","Nombre","Edad","Sexo","Tipo");
+    printf("%57s\n","-----------------------------------------------");
+
+    for(int i = 0; i < lenMascota; i++)
+    {
+        if(strcmp(maximoPais,))
+        {
+            mostrarUnaMascota(listMascota[i]);
+        }
+    }*/
 }
 
 void hardCodearMascotas(eMascota listado[])

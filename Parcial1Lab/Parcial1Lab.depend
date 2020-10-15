@@ -1,47 +1,24 @@
 # depslib dependency file v1.0
-1602307404 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\main.c
+1602719441 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\main.c
 	<stdio.h>
 	<stdlib.h>
 	"Funciones.h"
 
-1602304551 c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\funciones.h
+1602719441 c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\funciones.h
 
-1602289402 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\utn.c
+1602609947 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\utn.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 	"utn.h"
 
-1602289402 c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\utn.h
+1602609968 c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\utn.h
 
-1602308410 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\funciones.c
+1602719922 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\funciones.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"utn.h"
 	"Funciones.h"
-
-1602536315 source:c:\users\agusg\desktop\karen\parciales_lab_1\parcial1lab\funciones.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	"utn.h"
-	"Funciones.h"
-
-1602460370 c:\users\agusg\desktop\karen\parciales_lab_1\parcial1lab\utn.h
-
-1602536343 c:\users\agusg\desktop\karen\parciales_lab_1\parcial1lab\funciones.h
-
-1602536343 source:c:\users\agusg\desktop\karen\parciales_lab_1\parcial1lab\main.c
-	<stdio.h>
-	<stdlib.h>
-	"Funciones.h"
-
-1602462724 source:c:\users\agusg\desktop\karen\parciales_lab_1\parcial1lab\utn.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	<ctype.h>
-	"utn.h"
 

@@ -31,7 +31,7 @@ int getFloat(float*pAux);
 
 int utn_getCadena(char *pAux,int limite,int reintentos,char* msj,char*msjError);
 
-int pedirTipo(char *pAux,int limite,int reintentos,char* msj,char*msjError);
+int pedirTipo(char *pAux,int limite,int reintentos,char* msj,char*msjError,char* condUno,char* condDos,char* condTres);
 
 int isLetras(char*pAux);
 

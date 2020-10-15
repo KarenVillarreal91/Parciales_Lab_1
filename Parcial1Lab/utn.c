@@ -197,7 +197,7 @@ int utn_getCadena(char *pAux,int limite,int reintentos,char* msj,char*msjError){
     return todoOk;
 }
 
-int pedirTipo(char *pAux,int limite,int reintentos,char* msj,char*msjError)
+int pedirTipo(char *pAux,int limite,int reintentos,char* msj,char*msjError,char* condUno,char* condDos,char* condTres)
 {
     int todoOk=-1;
     char auxString[limite];
@@ -211,9 +211,13 @@ int pedirTipo(char *pAux,int limite,int reintentos,char* msj,char*msjError)
 
             if(getCadena(auxString,limite)==0 && isLetras(auxString)==0)
             {
-                if(stricmp(auxString,"Perro") == 0 || stricmp(auxString,"Gato") == 0 || stricmp(auxString,"Raro") == 0)
+                if(stricmp(auxString,condUno) == 0 || stricmp(auxString,condDos) == 0 || stricmp(auxString,condTres) == 0)
                 {
+                    strlwr(auxString);
+                    auxString[0] = toupper(auxString[0]);
+
                     strncpy(pAux,auxString,limite);
+
                     todoOk=0;
                     break;
                 }
