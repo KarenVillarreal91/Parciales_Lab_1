@@ -38,6 +38,22 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="mascotas.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mascotas.h" />
+		<Unit filename="mascotasyrazas.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mascotasyrazas.h" />
+		<Unit filename="menuyvarios.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="menuyvarios.h" />
+		<Unit filename="razas.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="razas.h" />
 		<Unit filename="utn.c">
 			<Option compilerVar="CC" />
 		</Unit>

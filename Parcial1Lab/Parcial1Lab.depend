@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1602719441 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\main.c
+1602741404 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\main.c
 	<stdio.h>
 	<stdlib.h>
-	"Funciones.h"
+	"mascotasyrazas.h"
+	"menuyvarios.h"
 
 1602719441 c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\funciones.h
 
@@ -15,10 +16,41 @@
 
 1602609968 c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\utn.h
 
-1602719922 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\funciones.c
+1602722063 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\funciones.c
+
+1602739125 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\menuyvarios.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"utn.h"
-	"Funciones.h"
+	"menuyvarios.h"
+
+1602740920 c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\menuyvarios.h
+
+1602740903 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\mascotas.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"mascotasyrazas.h"
+
+1602741397 c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\mascotasyrazas.h
+	"utn.h"
+	"razas.h"
+	"mascotas.h"
+
+1602739125 c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\razas.h
+
+1602739125 c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\mascotas.h
+
+1602741409 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\mascotasyrazas.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"mascotasyrazas.h"
+
+1602739125 source:c:\users\karen\desktop\facultad\programación\parciales\parcial1lab\razas.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"mascotasyrazas.h"
 
